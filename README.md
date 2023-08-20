@@ -1,7 +1,17 @@
-Data Analyst Portfolio Project Repository
-This Repository will hold all of the code and queries from the Portfolio Projects I create.
+# Covid-19 Vaccination Analysis
+The covid-19 Pandemic was one of a kind that took many lives.
+I embarked on a journey to get insights on Covid's impact on the World.
+The datasets of this project are from WHO.
 
-Please feel free to take these and run with them. Make them your own and find your own insights
+The following questions are what this analysis seeks to answer:
+ - Percent Population Vaccinated
+ - PercentPopulationVaccinated
+ - Deaths By Continent
+ - Continents with the highest death count per population
+ - Countries with Highest Infection Rate Compared to Population
+ - Total cases & population percentage infected
+ - Total Cases vs Total Deaths in Nigeria
+---------------------------------------------------------------------------------------------------------------------------------------
 
 SELECT*
 FROM PortfolioProject..CovidDeaths
@@ -210,7 +220,7 @@ SELECT*
 FROM CountryWithHighestDeaths
 
 
----VIEW 5 -- Countries with Highest Infection Rate compared to Population
+---VIEW 5 -- Countries with Highest Infection Rate Compared to Population
 
 CREATE VIEW HighestInfectionRate AS
 SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS PercentPopulationInfected
