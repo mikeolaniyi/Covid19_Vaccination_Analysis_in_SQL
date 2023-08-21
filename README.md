@@ -1,4 +1,8 @@
 # Covid-19 Vaccination Analysis
+
+![Covid19](https://github.com/mikeolaniyi/Covid19_Vaccination_Analysis/assets/120651356/c6684925-40ea-42c9-aaae-400304dbe289)
+
+
 The covid-19 Pandemic was one of a kind that took many lives.
 I embarked on a journey to get insights on Covid's impact on the World.
 The datasets of this project are from WHO.
