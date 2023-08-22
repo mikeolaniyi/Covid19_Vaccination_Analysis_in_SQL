@@ -1,6 +1,7 @@
 # Covid-19 Vaccination Analysis
 
-![Covid19](https://github.com/mikeolaniyi/Covid19_Vaccination_Analysis/assets/120651356/c6684925-40ea-42c9-aaae-400304dbe289)
+![Covid19-](https://github.com/mikeolaniyi/Covid19_Vaccination_Analysis_in_SQL/assets/120651356/ab54c8f4-7465-49b9-8502-c9f758497889)
+
 
 
 The covid-19 Pandemic was one of a kind that took many lives.
