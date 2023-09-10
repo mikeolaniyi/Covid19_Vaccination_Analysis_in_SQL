@@ -26,7 +26,7 @@ SELECT*
 FROM PortfolioProject..CovidDeaths
 WHERE continent is not null 
 ORDER BY 3,4
-```SQL
+
 
 
 --SELECT*
@@ -282,3 +282,6 @@ FROM PortfolioProject..CovidDeaths
 
 SELECT*
 FROM CasesvsDeaths
+
+
+```SQL
