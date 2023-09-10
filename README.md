@@ -16,6 +16,10 @@ The datasets of this project are from WHO.
  - Countries with Highest Infection Rate Compared to Population
  - Total cases & population percentage infected
  - Total Cases vs Total Deaths in Nigeria
+
+
+![Covid-19 Vaccination Analysis](https://github.com/mikeolaniyi/Covid19_Vaccination_Analysis_in_SQL/assets/120651356/6baecef0-83d1-46b3-89f6-1528fdd01c7b)
+
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 SELECT*
