@@ -1,31 +1,170 @@
 # Covid-19 Vaccination Analysis
+By Michael Olaniyi Jeremiah
 
 ![Covid19-](https://github.com/mikeolaniyi/Covid19_Vaccination_Analysis_in_SQL/assets/120651356/ab54c8f4-7465-49b9-8502-c9f758497889)
 
 
+- Brief Introduction
 
-The covid-19 Pandemic was one of a kind that took many lives.
-I embarked on a journey to get insights on Covid's impact on the World.
-The datasets of this project are from WHO.
+The covid-19 Pandemic was one of a kind that took many lives. I embarked on a journey to get insights on Covid's impact on the World. 
 
-## The following questions are what this analysis seeks to answer:
- - Percent Population Vaccinated
- - PercentPopulationVaccinated
- - Deaths By Continent
- - Continents with the highest death count per population
- - Countries with Highest Infection Rate Compared to Population
- - Total cases & population percentage infected
- - Total Cases vs Total Deaths in Nigeria
+
+
+**The Dataset:**
+
+The analysis conducted on the Covid-19 pandemic using the dataset from the World Health Organization (WHO) focuses on critical metrics such as total cases, death counts, infection rates, vaccination rollouts, and the impact of the virus across different continents.
+
+
+**The following questions are what this analysis seeks to answer:**
+- What is the Percentage of Population Vaccinated
+- What is the number of Deaths By Continent
+- Which is the Continents with the highest death count per population
+- Which is Countries with Highest Infection Rate Compared to Population
+- What is the Total cases & population percentage infected
+- What is the Total Cases vs Total Deaths in Nigeria
 
 
 ![Covid-19 Vaccination Analysis](https://github.com/mikeolaniyi/Covid19_Vaccination_Analysis_in_SQL/assets/120651356/6baecef0-83d1-46b3-89f6-1528fdd01c7b)
 
+
+**Datasets Description:**
+Covid-19 Deaths table 'CovidDeaths'  has 26 columns and 81,060 rows
+
+![image](https://github.com/user-attachments/assets/9a3595c1-af27-4e64-a31c-1ec771ec2521)
+
+
+
+**CovidDeaths table head output:**
+![image](https://github.com/user-attachments/assets/41a25d43-6a74-40c7-aa8e-907deeafbb79)
+
+
+
+Covid-19 Vaccinations table 'CovidVaccinations' has 37 columns and 85,171 rows
+![image](https://github.com/user-attachments/assets/f7455feb-625d-4f0b-8a18-3b609017164d)
+
+
+![image](https://github.com/user-attachments/assets/33542f11-68a1-4190-a221-345d61fb2ac6)
+
+
+**CovidVaccinations table head output:**
+![image](https://github.com/user-attachments/assets/a9db9a6f-b466-450e-8c40-95713c42867c)
+
 ---------------------------------------------------------------------------------------------------------------------------------------
+
+**Let's select the data that we are going to be using:**
+
 ```SQL
-SELECT*
-FROM PortfolioProject..CovidDeaths
+-- Let's select the data that we are going to be using
+
+SELECT location, date, total_cases, new_cases, total_deaths, population
+FROM CovidDeaths
+WHERE continent is not null and  total_deaths is not null
+ORDER BY 1,2
+```
+Output:
+![image](https://github.com/user-attachments/assets/434a06de-b65d-4e06-b29e-d9a833d91f08)
+
+
+
+## Total Cases vs Total Deaths in Nigeria
+```SQL
+-- Shows likelihood of dying if you contract covid in Nigeria
+
+SELECT location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 AS DeathsPercentage
+FROM CovidDeaths
+WHERE location LIKE '%Nigeria' 
+AND continent IS NOT NULL
+ORDER BY 1,2,
+```
+Output:
+![image](https://github.com/user-attachments/assets/5a7847ec-4433-4569-9ff7-34d5c328d962)
+
+## Total Cases vs. Total Deaths in Nigeria
+- The initial reported Covid-19 death in Nigeria occurred on 23rd March 2020 when there were 40 confirmed cases. By 30th April 2021, Nigeria had a total of 165,110 confirmed cases and 2,063 deaths, giving a death rate of approximately 1.25%. This indicates that out of every 100 people infected with Covid-19 in Nigeria, roughly 1.25 succumbed to the virus.
+
+- Findings: Nigeria had a relatively lower death rate compared to the global average, which hovered around 2%. This lower death rate could be attributed to several factors including a younger population or less severe strains of the virus during this period.
+
+
+ ## Total Cases vs Population
+```SQL
+-- Shows what percentage of population infected with Covid
+
+SELECT location, date, population, total_cases, 
+	  (total_cases/population)*100 AS PercentPopulationInfected 
+FROM CovidDeaths
+ORDER BY 1,2
+```
+Output:
+![image](https://github.com/user-attachments/assets/07f26211-bb19-4f13-afc6-b5f9276bf122)
+
+**Total Cases vs. Population: Percentage of Population Infected**
+
+- Query Analysis: This query shows the percentage of the population that was infected with Covid-19 in different countries. Countries like Andorra reported an infection rate of 17% of their population. In Nigeria, however, by 30th April 2021, 0.08% of the population was infected (based on Nigeria's population of approximately 206 million).
+
+- Findings: Nigeria's infection rate as a percentage of the total population was significantly lower compared to many other countries, particularly in Europe. This may indicate under-reporting of cases or limited testing capacity.
+
+
+
+**Countries with Highest Infection Rate compared to Population**
+```SQL
+-- Countries with Highest Infection Rate compared to Population
+
+SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS PercentPopulationInfected
+FROM CovidDeaths
 WHERE continent is not null 
-ORDER BY 3,4
+GROUP BY location, population
+ORDER BY PercentPopulationInfected DESC
+```
+ Output:
+![image](https://github.com/user-attachments/assets/e5b8a723-12f1-4987-89c2-de33209dc2e4)
+
+## Countries with Highest Infection Rate Compared to Population
+
+- The highest infection rates relative to population occurred in countries with smaller populations. Andorra had the highest infection rate, where more than 17% of the population contracted Covid-19. This demonstrates the disproportionate impact the virus had on smaller, densely populated countries.
+
+- Findings: Smaller nations, particularly in Europe, were hit hard by the pandemic, as they faced significant infection rates, unlike larger countries such as Nigeria.
+
+
+## Countries with Highest Death Count per Population
+```SQL
+-- Countries with Highest Death Count per Population
+
+SELECT location, MAX(cast(total_deaths as int)) AS TotalDeathsCount
+FROM CovidDeaths
+WHERE continent is not null 
+GROUP BY location
+ORDER BY TotalDeathsCount DESC
+```
+Output:
+![image](https://github.com/user-attachments/assets/ff2e9b43-483f-43db-b259-be44dbc84a8a)
+
+
+## Countries with Highest Death Count per Population
+
+- The United States recorded the highest total number of Covid-19 deaths, reflecting both its large population and the significant spread of the virus within its borders.
+
+- Findings: Although the US had a relatively advanced healthcare system, the sheer volume of cases overwhelmed the system, leading to a high number of fatalities.
+
+
+## Breaking it down by Continent
+```SQL
+-- Showing contintents with the highest death count per population
+
+SELECT continent, MAX(cast(Total_deaths as int)) as TotalDeathCount
+FROM CovidDeaths
+WHERE continent IS NOT NULL 
+GROUP BY continent
+ORDER BY TotalDeathCount DESC
+```
+Output:
+
+![image](https://github.com/user-attachments/assets/a963f350-9e5a-4115-a4b9-5f7c489e4737)
+
+
+
+
+
+
 
 
 
