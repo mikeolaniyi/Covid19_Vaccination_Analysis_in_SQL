@@ -160,10 +160,55 @@ Output:
 
 ![image](https://github.com/user-attachments/assets/a963f350-9e5a-4115-a4b9-5f7c489e4737)
 
+## Continents with the Highest Death Count per Population
+
+- North America had the highest death count, with 576,232 deaths, followed by South America with 403,783 deaths. This shows the severe impact Covid-19 had on these continents, especially in densely populated areas.
+
+- Findings: North and South America had the highest death tolls, largely due to delayed containment measures, overwhelmed healthcare systems, and perhaps differences in population health and preparedness.
+
+
+## Global Covid-19 Numbers
+
+```SQL
+-- Percentage of deaths by total cases
+
+SELECT SUM(CAST(new_cases AS INT)) AS Total_cases, 
+SUM(CAST(new_deaths AS INT)) AS Total_Deaths, 
+SUM(CAST(new_deaths AS INT))/ SUM(new_cases )*100 AS DeathsPercentage
+FROM CovidDeaths
+WHERE continent IS NOT NULL 
+ORDER BY 1,2
+```   
+Output:
+![image](https://github.com/user-attachments/assets/5d971e3e-5fbf-419b-a798-c5d38328f1b9)
+
+## Global Covid-19 Numbers: Death Percentage
+
+- The global death rate was calculated as 2.11%, indicating that globally, about 2 in every 100 people who contracted Covid-19 succumbed to the virus. This reflects the overall impact of the pandemic.
+
+- Findings: The global death rate provides a stark reminder of the severity of the pandemic. However, regional differences in healthcare capacity, early interventions, and government actions led to significant variations in death rates across continents.
 
 
 
+## Total Population vs Vaccinations
+```SQL
+-- Shows Percentage of Population that has recieved at least one Covid Vaccine
 
+WITH popvsvac (Continent, Location, Date, Population, New_vaccinations, RollingPeopleVaccinated) AS  
+(
+SELECT dea.continent, dea.location, dea.date,dea.population, vac.new_vaccinations, 
+SUM(CONVERT(int,vac.new_vaccinations)) OVER (partition BY dea.location ORDER BY dea.location, dea.date) AS RollingPeopleVaccinated
+FROM CovidDeaths dea
+JOIN CovidVaccinations vac
+ON dea.location = vac.location
+and dea.date = vac.date
+WHERE dea.continent IS NOT NULL
+)
+SELECT*, (RollingPeopleVaccinated/Population)*100 AS PercentRollingPeopleVaccinated
+FROM popvsvac
+```
+Output:
+![image](https://github.com/user-attachments/assets/e4c92b64-18ce-440c-930c-727a93da8573)
 
 
 
